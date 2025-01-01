@@ -16,7 +16,20 @@ const getAllCourses = asyncWrapper(async(req, res) => {
 })
 
 
+// get single course
+const getSingleCourse = asyncWrapper(
+  async (req, res, next) =>{
+  const course = await Course.findById(req.params.courseId);
+  if (!course){
+    const error = appError.create("Course not found", 404, httpStatusText.FAIL);
+    return next(error);
+  }
+  res.json({status: httpStatusText.SUCCESS,
+            data: {course: course}});
+  }
+)
 
 module.exports = {
-  getAllCourses
+  getAllCourses,
+  getSingleCourse
 };
