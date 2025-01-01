@@ -4,8 +4,9 @@ const app = express();
 const mongoose = require('mongoose');
 const corse = require('cors');
 const httpStatusText = require('./utils/httpStatusText');
-const coursesRouter = require('./routes/courses.route');
+const path = require('path');
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(express.json());
 
@@ -22,7 +23,11 @@ mongoose.connect(url)
 
 app.use(corse());
 
+const coursesRouter = require('./routes/courses.route');
+const usersRouter = require('./routes/users.route');
 app.use('/api/courses', coursesRouter); //localhost / ==> /api/courses
+app.use('/api/users', usersRouter);  //localhost / ==> /api/users
+
 
 //global midderware for not found routes
 app.all('*', (req, res) => {
