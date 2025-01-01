@@ -29,7 +29,22 @@ const getSingleCourse = asyncWrapper(
   }
 )
 
+// add new course
+const addCourse = asyncWrapper(async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()){
+    const error = appError.create(errors.array(), 400, httpStatusText.FAIL);
+    return next(error);
+  }
+
+  const newCourse = new Course(req.body);
+  await newCourse.save()
+  res.status(201).json({status: httpStatusText.SUCCESS,
+                        data: {course: newCourse}});
+})
+
 module.exports = {
   getAllCourses,
-  getSingleCourse
+  getSingleCourse,
+  addCourse
 };
