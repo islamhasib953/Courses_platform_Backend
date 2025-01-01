@@ -57,9 +57,19 @@ const updateCourse = asyncWrapper(async (req, res, next) => {
                           data: {course: UpdatedCourse}});
 })
 
+
+//delete course
+const deleteCourse = asyncWrapper(async (req, res) => {
+  const DeleteCourse = await Course.deleteOne({_id: req.params.courseId});
+  res.json({status: httpStatusText.SUCCESS,
+            data: null});
+
+})
+
 module.exports = {
   getAllCourses,
   getSingleCourse,
   addCourse,
-  updateCourse
+  updateCourse,
+  deleteCourse
 };

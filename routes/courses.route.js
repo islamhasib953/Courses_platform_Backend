@@ -15,6 +15,8 @@ router.route('/api/courses')
 router.route('/api/courses/:courseId')
             .get(courseController.getSingleCourse)
             .patch(courseController.updateCourse)
+            .delete(courseController.deleteCourse);
+
 
 
 module.exports = router;
