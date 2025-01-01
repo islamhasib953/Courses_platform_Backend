@@ -11,8 +11,10 @@ router.route('/api/courses')
               validationSchema(),
               courseController.addCourse);
 
-// git single course
+// git single course & update course
 router.route('/api/courses/:courseId')
             .get(courseController.getSingleCourse)
+            .patch(courseController.updateCourse)
+
 
 module.exports = router;

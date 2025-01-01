@@ -43,8 +43,23 @@ const addCourse = asyncWrapper(async (req, res, next) => {
                         data: {course: newCourse}});
 })
 
+
+// update course
+const updateCourse = asyncWrapper(async (req, res, next) => {
+  const CourseID = req.params.courseId
+  // update and return updated decument
+  const UpdatedCourse = await Course.updateOne({_id: CourseID}, {$set: {...req.body}});
+  if(!UpdatedCourse){
+    const error = appError.create("Course not found", 404, httpStatusText.FAIL);
+    return next(error);
+      }
+  res.status(200).json({status: httpStatusText.SUCCESS,
+                          data: {course: UpdatedCourse}});
+})
+
 module.exports = {
   getAllCourses,
   getSingleCourse,
-  addCourse
+  addCourse,
+  updateCourse
 };
