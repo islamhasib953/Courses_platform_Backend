@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
     required: false
   },
   role: {
-    type: String,   //نا كدا بعرف ان المستخدم لازم يكون واحد من دول يعنى السترنج ده بشيل واحد من اللى تحت دول
+    type: String,
     enum: [userRoles.STUDENT, userRoles.iNSTRUCTOR, userRoles.ADMIN],
     default: userRoles.STUDENT
   },

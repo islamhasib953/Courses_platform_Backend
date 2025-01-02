@@ -1,3 +1,4 @@
+// let {courses} = require('../data/courses'); // we use it to use data locafolder data
 const {validationResult} = require('express-validator');
 const Course = require('../models/course.model');
 const httpStatusText = require('../utils/httpStatusText');
@@ -14,7 +15,6 @@ const getAllCourses = asyncWrapper(async(req, res) => {
   res.json({status: httpStatusText.SUCCESS,
             data: {courses:courses}});
 })
-
 
 // get single course
 const getSingleCourse = asyncWrapper(
@@ -43,11 +43,9 @@ const addCourse = asyncWrapper(async (req, res, next) => {
                         data: {course: newCourse}});
 })
 
-
 // update course
 const updateCourse = asyncWrapper(async (req, res, next) => {
   const CourseID = req.params.courseId
-  // update and return updated decument
   const UpdatedCourse = await Course.updateOne({_id: CourseID}, {$set: {...req.body}});
   if(!UpdatedCourse){
     const error = appError.create("Course not found", 404, httpStatusText.FAIL);
@@ -56,7 +54,6 @@ const updateCourse = asyncWrapper(async (req, res, next) => {
   res.status(200).json({status: httpStatusText.SUCCESS,
                           data: {course: UpdatedCourse}});
 })
-
 
 //delete course
 const deleteCourse = asyncWrapper(async (req, res) => {

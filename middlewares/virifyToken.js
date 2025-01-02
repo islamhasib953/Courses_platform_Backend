@@ -12,7 +12,6 @@ const verifyToken = (req, res, next) =>{
     const token = AutHeader.split(' ')[1];
     try {
         const verifyUser = JWT.verify(token, process.env.TOKEN_SECRET_KEY);
-        //علشان استخدمه role انا بعمل كل ده علشان فى النهاية اقدر امسح ال
         req.verifyUser = verifyUser;  // attach user to request object for further use.  // req.verifyUser = {email: verifyUser.email, id: verifyUser.id, role: verifyUser.role }  // for example.
         // console.log('verifyUser', verifyUser);
         next();
