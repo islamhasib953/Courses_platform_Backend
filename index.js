@@ -26,11 +26,13 @@ app.use(corse());
 const coursesRouter = require('./routes/courses.route');
 const usersRouter = require('./routes/users.route');
 const enrollmentsRouter = require('./routes/enrollments.route');
-
+const lessonsRouter = require('./routes/lesson.route');
+const courseLessonsRouter = require('./routes/lesson.route');
 app.use('/api/courses', coursesRouter); //localhost / ==> /api/courses
 app.use('/api/users', usersRouter);  //localhost / ==> /api/users
 app.use('/api/enrollments', enrollmentsRouter);
-
+app.use('/api/courselessons', courseLessonsRouter);
+app.use('/api/lessons', lessonsRouter);
 
 //global midderware for not found routes
 app.all('*', (req, res) => {
