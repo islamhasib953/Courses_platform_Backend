@@ -5,14 +5,13 @@ const allowedTo = require('../middlewares/allowedTo');
 const userRoles = require('../utils/userRoles');
 const lessonControllers = require('../controllers/lesson.controller');
 
-//course lessons
 router.route('/:id/lessons')
             .get(verifyToken, lessonControllers.getAllCourseLessons)
             .post(
               verifyToken,
               allowedTo(userRoles.ADMIN, userRoles.iNSTRUCTOR),
               lessonControllers.addCourseLesson);
-//lessons
+
 router.route('/:lessonId')
             .get(verifyToken, lessonControllers.getLessonDetails)
             .patch(verifyToken,  allowedTo(userRoles.ADMIN, userRoles.iNSTRUCTOR), lessonControllers.updateLesson)

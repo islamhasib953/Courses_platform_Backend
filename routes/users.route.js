@@ -35,7 +35,6 @@ const upload = multer({storage: diskStorage,
 const router = express.Router();
 
 // get all users
-// هنا فى الاول علشان يتاكدمنه انه موجود لو موجود هيكمل بعد كدة ولو مش موجود مش هيعمل حاجة وهيقف verifyToken لى حطيت ال 
 router.route('/')
             .get(verifyToken, allowedTo(userRoles.ADMIN), usersController.getAllUsers)
 
