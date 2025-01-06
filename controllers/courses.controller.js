@@ -12,7 +12,7 @@ const getAllCourses = asyncWrapper(async(req, res) => {
   const page = query.page || 1;
   const skip = (page - 1) * limit;
   const courses = await Course.find({}, {__v:0}).limit(limit).skip(skip);
-  res.json({status: httpStatusText.SUCCESS,
+  res.json({status: httpStatasyncWrapperusText.SUCCESS,
             data: {courses:courses}});
 })
 

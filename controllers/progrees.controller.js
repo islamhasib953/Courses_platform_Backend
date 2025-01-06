@@ -4,7 +4,7 @@ const httpStatusText = require('../utils/httpStatusText');
 
 // Get Progress for a User
 const getUserProgress = asyncWrapper(async (req, res) => {
-  const userId = req.user.id; // Assuming user is authenticated and ID is in `req.user`
+  const userId = req.verifyUser.id; // Assuming user is authenticated and ID is in `req.user`
   const progress = await Progress.find({ user_id: userId }).populate('lesson_id');
   res.status(200).json({
     status: httpStatusText.SUCCESS,
@@ -15,7 +15,7 @@ const getUserProgress = asyncWrapper(async (req, res) => {
 // Add or Update Progress
 const upsertProgress = asyncWrapper(async (req, res) => {
   const { lesson_id, status } = req.body;
-  const userId = req.user.id;
+  const userId = req.verifyUser.id;
 
   if (!lesson_id || !status) {
     return res.status(400).json({
@@ -39,7 +39,7 @@ const upsertProgress = asyncWrapper(async (req, res) => {
 // Mark Lesson as Completed
 const completeLesson = asyncWrapper(async (req, res) => {
   const { lesson_id } = req.params;
-  const userId = req.user.id;
+  const userId = req.verifyUser.id;
 
   const progress = await Progress.findOneAndUpdate(
     { user_id: userId, lesson_id },
@@ -56,7 +56,7 @@ const completeLesson = asyncWrapper(async (req, res) => {
 
 // Get Progress for a Specific Lesson
 const getLessonProgress = asyncWrapper(async (req, res) => {
-  const { lesson_id } = req.params;
+  const lesson_id = req.params.lesson_id;
 
   const progress = await Progress.find({ lesson_id }).populate('user_id');
   res.status(200).json({
@@ -67,8 +67,8 @@ const getLessonProgress = asyncWrapper(async (req, res) => {
 
 // Delete Progress
 const deleteProgress = asyncWrapper(async (req, res) => {
-  const { lesson_id } = req.params;
-  const userId = req.user.id;
+  const lesson_id = req.params.lesson_id;
+  const userId = req.verifyUser.id;
 
   await Progress.findOneAndDelete({ user_id: userId, lesson_id });
 
